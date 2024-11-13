@@ -55,6 +55,10 @@
 		"*.css": "stylelint --fix"
 	},
 	"dependencies": {
+		"@opentelemetry/api": "^1.9.0",
+		"@opentelemetry/auto-instrumentations-node": "^0.52.1",
+		"@opentelemetry/sdk-node": "^0.54.2",
+		"@opentelemetry/sdk-trace-node": "^1.27.0",
 		"ajv": "^8.17.1",
 		"ansis": "^3.3.2",
 		"console-stamp": "^3.1.2",
