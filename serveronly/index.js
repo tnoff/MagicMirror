@@ -9,14 +9,19 @@ const { BatchSpanProcessor } = require("@opentelemetry/sdk-trace-base");
 const { SemanticResourceAttributes } = require("@opentelemetry/semantic-conventions");
 const { Resource } = require("@opentelemetry/resources");
 
+const service_name = process.env.OTEL_SERVICE_NAME || "magic-mirror";
+const trace_endpoint = process.env.OTEL_TRACE_ENDPOINT || "http://localhost:4318/v1/traces";
+
 const resource = Resource.default().merge(
 	new Resource({
-		[SemanticResourceAttributes.SERVICE_NAME]: "magic-mirror",
+		[SemanticResourceAttributes.SERVICE_NAME]: service_name,
 		[SemanticResourceAttributes.SERVICE_VERSION]: "0.0.1"
 	})
 );
 const provider = new NodeTracerProvider({ resource: resource });
-const exporter = new OTLPTraceExporter();
+const exporter = new OTLPTraceExporter({
+	url: trace_endpoint
+});
 const processor = new BatchSpanProcessor(exporter);
 provider.addSpanProcessor(processor);
 provider.register();
